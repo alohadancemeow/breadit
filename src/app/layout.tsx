@@ -28,7 +28,10 @@ export default function RootLayout({
         inter.className
       )}
     >
-      <body className="min-h-screen pt-12 antialiased bg-slate-50">
+      <body
+        suppressHydrationWarning={true}
+        className="min-h-screen pt-12 antialiased bg-slate-50"
+      >
         <Providers>
           {/* @ts-expect-error Server Component */}
           <Navbar />
@@ -36,8 +39,8 @@ export default function RootLayout({
           <div className="container h-full pt-12 mx-auto max-w-7xl">
             {children}
           </div>
-          <Toaster />
         </Providers>
+        <Toaster />
       </body>
     </html>
   );
