@@ -33,11 +33,11 @@ const Post: FC<PostProps> = ({
   return (
     <div className="bg-white rounded-md shadow">
       <div className="flex justify-between px-6 py-4">
-        {/* <PostVoteClient
+        <PostVoteClient
           postId={post.id}
           initialVotesAmt={_votesAmt}
           initialVote={_currentVote?.type}
-        /> */}
+        />
 
         <div className="flex-1 w-0">
           <div className="mt-1 text-xs text-gray-500 max-h-40">
