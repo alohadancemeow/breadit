@@ -1,15 +1,14 @@
 "use client";
 
-import axios from "axios";
+import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/config";
+import { ExtendedPost } from "@/types/db";
 import { useIntersection } from "@mantine/hooks";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { FC, useEffect, useRef } from "react";
-import { useSession } from "next-auth/react";
-import { ExtendedPost } from "@/types/db";
-import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/config";
-
 import Post from "./Post";
+import { useSession } from "next-auth/react";
 
 interface PostFeedProps {
   initialPosts: ExtendedPost[];
@@ -24,7 +23,6 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName }) => {
   });
   const { data: session } = useSession();
 
-  // # Get posts by limit = 2
   const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
     ["infinite-query"],
     async ({ pageParam = 1 }) => {
@@ -35,6 +33,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName }) => {
       const { data } = await axios.get(query);
       return data as ExtendedPost[];
     },
+
     {
       getNextPageParam: (_, pages) => {
         return pages.length + 1;
@@ -43,10 +42,9 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName }) => {
     }
   );
 
-  // Load more posts when the last post comes into view
   useEffect(() => {
     if (entry?.isIntersecting) {
-      fetchNextPage();
+      fetchNextPage(); // Load more posts when the last post comes into view
     }
   }, [entry, fetchNextPage]);
 
