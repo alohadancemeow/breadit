@@ -40,13 +40,11 @@ const SubRedditPostPage = async ({ params }: SubRedditPostPageProps) => {
   }
 
   if (!post && !cachedPost) return notFound();
-  console.log(cachedPost, 'username');
 
   return (
     <div>
       <div className="flex flex-col items-center justify-between h-full sm:flex-row sm:items-start">
         <Suspense fallback={<PostVoteShell />}>
-          {/* @ts-expect-error server component */}
           <PostVoteServer
             postId={post?.id ?? cachedPost.id}
             getData={async () => {

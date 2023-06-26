@@ -2,8 +2,9 @@
 
 import CustomCodeRenderer from "@/components/renderers/CustomCodeRenderer";
 import CustomImageRenderer from "@/components/renderers/CustomImageRenderer";
-import { FC } from "react";
+import { FC, Suspense } from "react";
 import dynamic from "next/dynamic";
+import { Loader2 } from "lucide-react";
 
 const Output = dynamic(
   async () => (await import("editorjs-react-renderer")).default,
@@ -28,13 +29,16 @@ const style = {
 
 const EditorOutput: FC<EditorOutputProps> = ({ content }) => {
   return (
-    // @ts-expect-error
-    <Output
-      style={style}
-      className="text-sm"
-      renderers={renderers}
-      data={content}
-    />
+    <Suspense
+      fallback={<Loader2 className="w-5 h-5 animate-spin text-zinc-500" />}
+    >
+      <Output
+        style={style}
+        className="text-sm"
+        renderers={renderers}
+        data={content}
+      />
+    </Suspense>
   );
 };
 
