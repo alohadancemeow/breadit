@@ -16,9 +16,11 @@ export function UserAvatar({ user, ...props }: UserAvatarProps) {
         <div className="relative w-full h-full aspect-square">
           <Image
             fill
+            sizes="100%"
             src={user.image}
             alt="profile picture"
             referrerPolicy="no-referrer"
+            priority
           />
         </div>
       ) : (
